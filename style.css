@@ -14,7 +14,7 @@ body {
     position: relative;
 }
 
-#snake {
+.snake {
     width: 10px;
     height: 10px;
     background-color: red;
