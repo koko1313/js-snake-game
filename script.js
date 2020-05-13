@@ -1,4 +1,14 @@
-let snake = document.getElementById("snake");
+const playground = document.getElementById("playground");
+const snake = document.getElementById("snake");
+let ciganin = document.getElementById("ciganin");
+
+const playgroundWidth = playground.clientWidth;
+const playgroundHeight = playground.clientHeight;
+
+const snakeWidth = snake.clientWidth;
+const snakeHeight = snake.clientHeight;
+
+const step = 10;
 
 let positionX = 0;
 let positionY = 0;
@@ -8,38 +18,38 @@ let ciganinPositionY = 0;
 let resentPressedButton = "rightButton";
 
 function moveToRight() {
-    if(positionX == 580) {
+    if(positionX == playgroundWidth - snakeWidth) {
         positionX = 0;
     }
 
-    positionX = positionX + 10;
+    positionX = positionX + step;
     snake.style.left = positionX;
 }
 
 function moveToLeft() {
     if(positionX == 0) {
-        positionX = 580;
+        positionX = playgroundWidth - snakeWidth;
     }
 
-    positionX = positionX - 10;
+    positionX = positionX - step;
     snake.style.left = positionX;
 }
 
 function moveToDown() {
-    if(positionY == 580) {
+    if(positionY == playgroundHeight - snakeHeight) {
         positionY = 0;
     }
 
-    positionY = positionY + 10;
+    positionY = positionY + step;
     snake.style.top = positionY;
 }
 
 function moveToUp() {
     if(positionY == 0) {
-        positionY = 580;
+        positionY = playgroundHeight - snakeHeight;
     }
 
-    positionY = positionY - 10;
+    positionY = positionY - step;
     snake.style.top = positionY;
 }
 
@@ -90,13 +100,12 @@ document.onkeydown = function(e) {
 
 // #############################################################
 function addNewCiganin() {
-    ciganinPositionX = Math.floor(Math.random() * 590);
-    ciganinPositionX = ciganinPositionX - ciganinPositionX % 10;
+    ciganinPositionX = Math.floor(Math.random() * playgroundWidth - snakeWidth);
+    ciganinPositionX = ciganinPositionX - ciganinPositionX % step;
 
     ciganinPositionY = Math.floor(Math.random() * 590);
-    ciganinPositionY = ciganinPositionY - ciganinPositionY % 10;
+    ciganinPositionY = ciganinPositionY - ciganinPositionY % step;
 
-    let ciganin = document.getElementById("ciganin");
     ciganin.style.left = ciganinPositionX;
     ciganin.style.top = ciganinPositionY;
 }
