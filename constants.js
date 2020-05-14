@@ -11,7 +11,7 @@ const playgroundWidth = playground.clientWidth;
 const playgroundHeight = playground.clientHeight;
 
 const step = 20;
-const interval = 150;
+const interval = 250;
 
 
 // SNAKE CONSTANTS

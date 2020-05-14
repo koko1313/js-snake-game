@@ -3,18 +3,18 @@ const rightButton = document.getElementById("rightButton");
 const upButton = document.getElementById("upButton");
 const downButton = document.getElementById("downButton");
 
-leftButton.addEventListener("click", function() {
+leftButton.addEventListener("mousedown", function() {
     recentPressedButton = "leftButton";
 });
 
-rightButton.addEventListener("click", function() {
+rightButton.addEventListener("mousedown", function() {
     recentPressedButton = "rightButton";
 });
 
-upButton.addEventListener("click", function() {
+upButton.addEventListener("mousedown", function() {
     recentPressedButton = "upButton";
 });
 
-downButton.addEventListener("click", function() {
+downButton.addEventListener("mousedown", function() {
     recentPressedButton = "downButton";
 });
