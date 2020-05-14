@@ -12,7 +12,7 @@ const ciganinHeight = ciganin.clientHeight;
 const snakePartWidth = snakeHead.clientWidth;
 const snakePartHeight = snakeHead.clientHeight;
 
-const step = 10;
+const step = 20;
 const interval = 150;
 
 let ciganinPositionX = 0;
@@ -174,10 +174,10 @@ document.onkeydown = function(e) {
 
 // #############################################################
 function addNewCiganin() {
-    ciganinPositionX = ciganinWidth + Math.floor(Math.random() * playgroundWidth - (ciganinWidth * 2));
+    ciganinPositionX = Math.floor(Math.random() * (playgroundWidth - ciganinWidth) + ciganinWidth);
     ciganinPositionX = ciganinPositionX - ciganinPositionX % step;
 
-    ciganinPositionY = ciganinHeight + Math.floor(Math.random() * playgroundHeight - (ciganinHeight * 2));
+    ciganinPositionY = Math.floor(Math.random() * (playgroundHeight - ciganinHeight) + ciganinHeight);
     ciganinPositionY = ciganinPositionY - ciganinPositionY % step;
 
     ciganin.style.left = ciganinPositionX;
