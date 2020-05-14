@@ -1,53 +1,20 @@
 body {
-    background-color: #383838;
-    color: white;
+    background-color: #b4b4b4;
     text-align: center;
+    touch-action: manipulation;
     margin: 0;
     padding: 0;
-    touch-action: manipulation;
 }
-
-#points {
-    text-align: center;
-    margin: 20px auto;
-    width: 460px;
-}
-
 
 #playground {
-    border: 5px solid #CCCCCC;
+    border: 5px solid rgb(0, 0, 0);
+    background-color: #333333;
+}
+
+
+h1,h2 {
     width: 460px;
-    height: 460px;
-    margin: 0 auto;
-    position: relative;
-    background-color: black;
-    overflow: hidden;
-}
-
-
-#snake {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-}
-
-.snake-part {
-    width: 20px;
-    height: 20px;
-    background-color: #12f202;
-    position: absolute;
-    border-radius: 6px;
-    border: 1px solid black;
-}
-
-
-#apple {
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    position: absolute;
-    border-radius: 6px;
-    border: 1px solid black;
+    margin: 20px auto;
 }
 
 

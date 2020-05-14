@@ -1,19 +1,15 @@
 <html>
 <head>
-    <title>Snake Game</title>
-    <link href="./style.css" rel="stylesheet" type="text/css">
+    <title>Snake game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h2 id="points">
-        Points: <span id="pointsLabel">1</span>
-    </h2>
+    <h1>Snake Game</h1>
+    <h2>Points: <span id="points">1</span></h2>
 
-    <div id="playground">
-        <div id="snake"></div>
-
-        <div id="apple"></div>
-    </div>
+    <canvas id="playground" width="460" height="460">
+    </canvas>
 
     <div id="buttons">
         <div id="upRow">
@@ -26,10 +22,7 @@
         </div>        
     </div>
 
-    <script src="./constants.js"></script>
-    <script src="./snake.js"></script>
-    <script src="./apple.js"></script>
-    <script src="./buttons.js"></script>
     <script src="./script.js"></script>
+    <script src="./buttons.js"></script>
 </body>
 </html>

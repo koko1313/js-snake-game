@@ -1,126 +1,155 @@
-// when the game begin
-addNewApple();
-snake.push(new SnakePart(0, 0));
+const playground = document.getElementById("playground");
+const ctx = playground.getContext("2d");
 
-function moveToRight() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
+const poinsLabel = document.getElementById("points");
+let points = 1;
 
-    lastSnakePart.positionX = firstSnakePart.positionX + step;
-    lastSnakePart.positionY = firstSnakePart.positionY;
+const squareWidth = 20;
 
-    if(lastSnakePart.positionX > playgroundWidth - snakePartWidth) {
-        lastSnakePart.positionX = 0;
+const step = 20;
+
+const interval = 150;
+
+let recentPressedButton = "rightButton";
+
+
+// ######################################
+
+const apple = {
+    x: 0,
+    y: 0,
+    getX: () => x,
+    getY: () => y,
+    draw: () => {
+        ctx.beginPath();
+        ctx.rect(x, y, squareWidth, squareWidth);
+
+        ctx.lineWidth = "1";
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.fillStyle = "#ff5656";
+        ctx.fill();
+    },
+    reDraw: () => {
+        x = Math.floor(Math.random() * (playground.width - squareWidth) + squareWidth);
+        x = x - x % squareWidth;
+
+        y = Math.floor(Math.random() * (playground.height - squareWidth) + squareWidth);
+        y = y - y % squareWidth;
+
+        apple.draw();
     }
-
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
 }
 
-function moveToLeft() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
+// ######################################
 
-    lastSnakePart.positionX = firstSnakePart.positionX - step;
-    lastSnakePart.positionY = firstSnakePart.positionY;
+const SnakePart = function(x, y) {
+    this.x = x;
+    this.y = y;
 
-    if(lastSnakePart.positionX < 0) {
-        lastSnakePart.positionX = playgroundWidth - snakePartWidth;
+    this.draw = function() {
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, squareWidth, squareWidth);
+
+        ctx.lineWidth = "1";
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.fillStyle = "#12f202";
+        ctx.fill();
     }
-
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
 }
 
-function moveToDown() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
+// ######################################
 
-    lastSnakePart.positionX = firstSnakePart.positionX;
-    lastSnakePart.positionY = firstSnakePart.positionY + step;
+const snake = [new SnakePart(0, 0)];
+apple.reDraw();
 
-    if(lastSnakePart.positionY > playgroundHeight - snakePartHeight) {
-        lastSnakePart.positionY = 0;
-    }
+// ######################################
 
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+const moveRight = (firstPart, lastPart) => {
+    lastPart.x = firstPart.x + step;
+    lastPart.y = firstPart.y;
 
-    snake.unshift(lastSnakePart);
+    if(lastPart.x > playground.width - squareWidth) lastPart.x = 0;
+};
+
+const moveLeft = (firstPart, lastPart) => {
+    lastPart.x = firstPart.x - step;
+    lastPart.y = firstPart.y;
+
+    if(lastPart.x < 0) lastPart.x = playground.width - squareWidth;
+};
+
+const moveDown = (firstPart, lastPart) => {
+    lastPart.x = firstPart.x;
+    lastPart.y = firstPart.y + step;
+
+    if(lastPart.y > playground.height - squareWidth) lastPart.y = 0;
+};
+
+const moveUp = (firstPart, lastPart) => {
+    lastPart.x = firstPart.x;
+    lastPart.y = firstPart.y - step;
+
+    if(lastPart.y < 0) lastPart.y = playground.height - squareWidth;
+};
+
+// ######################################
+
+const redrawPlayground = () => {
+    ctx.clearRect(0, 0, playground.width, playground.height);
+    snake.forEach(snakePart => snakePart.draw());
+    apple.draw();
 }
 
-function moveToUp() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
-
-    lastSnakePart.positionX = firstSnakePart.positionX;
-    lastSnakePart.positionY = firstSnakePart.positionY - step;
-
-    if(lastSnakePart.positionY < 0) {
-        lastSnakePart.positionY = playgroundHeight - snakePartHeight;
-    }
-
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
+const updatePoints = () => {
+    points++;
+    poinsLabel.innerText = points;
 }
 
-
-function updatePoints() {
-    points = points + 1;
-    pointsLabel.innerText = points;
-}
-
-function checkIfCatch() {
-    if(snake[0].positionX == applePositionX && snake[0].positionY == applePositionY) {
+const checkIfCatch = () => {
+    if(snake[0].x == apple.getX() && snake[0].y == apple.getY()) {
         updatePoints();
-        addNewShakePart();
-        addNewApple();
+        apple.reDraw();
+        const lastSnakePart = snake[snake.length - 1];
+        snake.push(new SnakePart(lastSnakePart.x, lastSnakePart.y));
     }
 }
 
 setInterval(() => {
-    if (snake.length == 0) return;
-    
-    if(recentPressedButton == "rightButton") {
-        moveToRight();
-    } 
-    else if(recentPressedButton == "leftButton") {
-        moveToLeft();
+    let firstPart = snake[0];
+    let lastPart = snake.pop();
+
+    switch(recentPressedButton) {
+        case "rightButton": moveRight(firstPart, lastPart); break;
+        case "leftButton": moveLeft(firstPart, lastPart); break;
+        case "downButton": moveDown(firstPart, lastPart); break;
+        case "upButton": moveUp(firstPart, lastPart); break;
     }
-    else if(recentPressedButton == "downButton") {
-        moveToDown();
-    }
-    else if(recentPressedButton == "upButton") {
-        moveToUp();
-    }
+
+    snake.unshift(lastPart);
+
+    redrawPlayground();
 
     checkIfCatch();
 }, interval);
 
 
-document.onkeydown = function(e) {
-    switch (e.keyCode) {
-        // Arrow left
+window.addEventListener("keydown", (e) => {
+    switch(e.keyCode) {
         case 37:
             recentPressedButton = "leftButton";
             break;
-        // Arrow up
         case 38:
             recentPressedButton = "upButton";
             break;
-        // Arrow right
         case 39:
             recentPressedButton = "rightButton";
             break;
-        // Arrow down
         case 40:
             recentPressedButton = "downButton";
             break;
     }
-};
+});
