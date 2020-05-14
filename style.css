@@ -3,14 +3,16 @@ body {
     color: white;
 }
 
+
 #title {
     text-align: center;
 }
 
-#point {
+#points {
     text-align: center;
     margin-bottom: 10px;
 }
+
 
 #playground {
     border: 5px solid #CCCCCC;
@@ -21,6 +23,7 @@ body {
     background-color: black;
     overflow: hidden;
 }
+
 
 #snake {
     width: 100%;
@@ -33,27 +36,29 @@ body {
     height: 20px;
     background-color: #12f202;
     position: absolute;
-    border-radius: 50%;
+    border-radius: 6px;
     border: 1px solid black;
 }
+
 
 #apple {
     width: 20px;
     height: 20px;
     background-color: red;
     position: absolute;
-    border-radius: 50%;
+    border-radius: 6px;
     border: 1px solid black;
 }
 
-#keys {
+
+#buttons {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#keys button {
+#buttons button {
     width: 65px;
     height: 65px;
     margin: 5px;

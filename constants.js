@@ -1,3 +1,9 @@
+// WINDOW CONSTANTS
+const pointsLabel = document.getElementById("pointsLabel");
+let points = 1;
+
+let recentPressedButton = "rightButton";
+
 // PLAYGROUND CONSTANTS
 const playground = document.getElementById("playground");
 
@@ -6,9 +12,6 @@ const playgroundHeight = playground.clientHeight;
 
 const step = 20;
 const interval = 150;
-
-const pointsLabel = document.getElementById("pointsLabel");
-let points = 1;
 
 
 // SNAKE CONSTANTS

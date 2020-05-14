@@ -4,17 +4,17 @@ const upButton = document.getElementById("upButton");
 const downButton = document.getElementById("downButton");
 
 leftButton.addEventListener("click", function() {
-    resentPressedButton = "leftButton";
+    recentPressedButton = "leftButton";
 });
 
 rightButton.addEventListener("click", function() {
-    resentPressedButton = "rightButton";
+    recentPressedButton = "rightButton";
 });
 
 upButton.addEventListener("click", function() {
-    resentPressedButton = "upButton";
+    recentPressedButton = "upButton";
 });
 
 downButton.addEventListener("click", function() {
-    resentPressedButton = "downButton";
+    recentPressedButton = "downButton";
 });

@@ -76,9 +76,6 @@ function updatePoints() {
     pointsLabel.innerText = points;
 }
 
-
-let resentPressedButton = "rightButton";
-
 function checkIfCatch() {
     if(snake[0].positionX == applePositionX && snake[0].positionY == applePositionY) {
         updatePoints();
@@ -90,16 +87,16 @@ function checkIfCatch() {
 setInterval(() => {
     if (snake.length == 0) return;
     
-    if(resentPressedButton == "rightButton") {
+    if(recentPressedButton == "rightButton") {
         moveToRight();
     } 
-    else if(resentPressedButton == "leftButton") {
+    else if(recentPressedButton == "leftButton") {
         moveToLeft();
     }
-    else if(resentPressedButton == "downButton") {
+    else if(recentPressedButton == "downButton") {
         moveToDown();
     }
-    else if(resentPressedButton == "upButton") {
+    else if(recentPressedButton == "upButton") {
         moveToUp();
     }
 
@@ -111,19 +108,19 @@ document.onkeydown = function(e) {
     switch (e.keyCode) {
         // Arrow left
         case 37:
-            resentPressedButton = "leftButton";
+            recentPressedButton = "leftButton";
             break;
         // Arrow up
         case 38:
-            resentPressedButton = "upButton";
+            recentPressedButton = "upButton";
             break;
         // Arrow right
         case 39:
-            resentPressedButton = "rightButton";
+            recentPressedButton = "rightButton";
             break;
         // Arrow down
         case 40:
-            resentPressedButton = "downButton";
+            recentPressedButton = "downButton";
             break;
     }
 };
