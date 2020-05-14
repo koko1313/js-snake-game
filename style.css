@@ -15,22 +15,16 @@ body {
 }
 
 #snake {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-}
-
-.snake-part {
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     background-color: red;
     position: absolute;
     border-radius: 50%;
 }
 
 #ciganin {
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     background-color: black;
     position: absolute;
     border-radius: 50%;

@@ -1,150 +1,66 @@
-const playground = document.getElementById("playground");
-const snakeArea = document.getElementById("snake-area")
-const snakeHead = document.getElementsByClassName("snake-part")[0];
-const ciganin = document.getElementById("ciganin");
+let snake = document.getElementById("snake");
 
-const playgroundWidth = playground.clientWidth;
-const playgroundHeight = playground.clientHeight;
-
-const ciganinWidth = ciganin.clientWidth;
-const ciganinHeight = ciganin.clientHeight;
-
-const snakePartWidth = snakeHead.clientWidth;
-const snakePartHeight = snakeHead.clientHeight;
-
-const step = 20;
-const interval = 150;
-
+let positionX = 0;
+let positionY = 0;
 let ciganinPositionX = 0;
 let ciganinPositionY = 0;
 
-const SnakePart = function(positionX, positionY, domElement) {
-    var positionX;
-    var positionY;
-    var domElement;
-
-    this.positionX = positionX;
-    this.positionY = positionY;
-    this.domElement = domElement;
-
-    return this;
-}
-
-const snake = [new SnakePart(0, 0, snakeHead)];
-
 let resentPressedButton = "rightButton";
 
-
 function moveToRight() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
-
-    lastSnakePart.positionX = firstSnakePart.positionX + step;
-    lastSnakePart.positionY = firstSnakePart.positionY;
-
-    if(lastSnakePart.positionX > playgroundWidth - snakePartWidth) {
-        lastSnakePart.positionX = 0;
+    if(positionX == 580) {
+        positionX = 0;
     }
 
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
+    positionX = positionX + 10;
+    snake.style.left = positionX;
 }
 
 function moveToLeft() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
-
-    lastSnakePart.positionX = firstSnakePart.positionX - step;
-    lastSnakePart.positionY = firstSnakePart.positionY;
-
-    if(lastSnakePart.positionX < 0) {
-        lastSnakePart.positionX = playgroundWidth - snakePartWidth;
+    if(positionX == 0) {
+        positionX = 580;
     }
 
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
+    positionX = positionX - 10;
+    snake.style.left = positionX;
 }
 
 function moveToDown() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
-
-    lastSnakePart.positionX = firstSnakePart.positionX;
-    lastSnakePart.positionY = firstSnakePart.positionY + step;
-
-    if(lastSnakePart.positionY > playgroundHeight - snakePartHeight) {
-        lastSnakePart.positionY = 0;
+    if(positionY == 580) {
+        positionY = 0;
     }
 
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
+    positionY = positionY + 10;
+    snake.style.top = positionY;
 }
 
 function moveToUp() {
-    const firstSnakePart = snake[0];
-    const lastSnakePart = snake.pop();
-
-    lastSnakePart.positionX = firstSnakePart.positionX;
-    lastSnakePart.positionY = firstSnakePart.positionY - step;
-
-    if(lastSnakePart.positionY < 0) {
-        lastSnakePart.positionY = playgroundHeight - snakePartHeight;
+    if(positionY == 0) {
+        positionY = 580;
     }
 
-    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
-    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
-
-    snake.unshift(lastSnakePart);
-}
-
-
-function addSnakePart() {
-    const lastSnakePart = snake[snake.length - 1];
-
-    let positionX = lastSnakePart.positionX;
-    let positionY = lastSnakePart.positionY;
-
-    const domElement = document.createElement("div");
-    domElement.setAttribute("class", "snake-part");
-    domElement.style.left = positionX;
-    domElement.style.top = positionY;
-
-    snake.push(new SnakePart(positionX, positionY, domElement));
-
-    snakeArea.appendChild(domElement);
-}
-
-function checkIfCatch() {
-    if(snake[0].positionX == ciganinPositionX && snake[0].positionY == ciganinPositionY) {
-        addSnakePart();
-        addNewCiganin();
-    }
+    positionY = positionY - 10;
+    snake.style.top = positionY;
 }
 
 setInterval(() => {
-    switch(resentPressedButton) {
-        case "rightButton" :
-            moveToRight();
-            break;
-        case "leftButton" :
-            moveToLeft();
-            break;
-        case "downButton" : 
-            moveToDown();
-            break;
-        case "upButton" :
-            moveToUp();
-            break;
+    if(resentPressedButton == "rightButton") {
+        moveToRight();
+    } 
+    else if(resentPressedButton == "leftButton") {
+        moveToLeft();
+    }
+    else if(resentPressedButton == "downButton") {
+        moveToDown();
+    }
+    else if(resentPressedButton == "upButton") {
+        moveToUp();
     }
 
-    checkIfCatch();
-}, interval);
+    if(positionX == ciganinPositionX && positionY == ciganinPositionY) {
+        addNewCiganin();
+    }
+}, 200);
 
 
 document.onkeydown = function(e) {
@@ -174,12 +90,13 @@ document.onkeydown = function(e) {
 
 // #############################################################
 function addNewCiganin() {
-    ciganinPositionX = Math.floor(Math.random() * (playgroundWidth - ciganinWidth) + ciganinWidth);
-    ciganinPositionX = ciganinPositionX - ciganinPositionX % step;
+    ciganinPositionX = Math.floor(Math.random() * 590);
+    ciganinPositionX = ciganinPositionX - ciganinPositionX % 10;
 
-    ciganinPositionY = Math.floor(Math.random() * (playgroundHeight - ciganinHeight) + ciganinHeight);
-    ciganinPositionY = ciganinPositionY - ciganinPositionY % step;
+    ciganinPositionY = Math.floor(Math.random() * 590);
+    ciganinPositionY = ciganinPositionY - ciganinPositionY % 10;
 
+    let ciganin = document.getElementById("ciganin");
     ciganin.style.left = ciganinPositionX;
     ciganin.style.top = ciganinPositionY;
 }
