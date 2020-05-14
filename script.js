@@ -1,5 +1,6 @@
 const playground = document.getElementById("playground");
-const snakeHead = document.getElementsByClassName("snake")[0];
+const snakeArea = document.getElementById("snake-area")
+const snakeHead = document.getElementsByClassName("snake-part")[0];
 const ciganin = document.getElementById("ciganin");
 
 const playgroundWidth = playground.clientWidth;
@@ -8,8 +9,8 @@ const playgroundHeight = playground.clientHeight;
 const ciganinWidth = ciganin.clientWidth;
 const ciganinHeight = ciganin.clientHeight;
 
-const snakeWidth = snakeHead.clientWidth;
-const snakeHeight = snakeHead.clientHeight;
+const snakePartWidth = snakeHead.clientWidth;
+const snakePartHeight = snakeHead.clientHeight;
 
 const step = 10;
 const interval = 150;
@@ -17,90 +18,106 @@ const interval = 150;
 let ciganinPositionX = 0;
 let ciganinPositionY = 0;
 
-const SnakePart = function(positionX, positionY, direction, domElement) {
+const SnakePart = function(positionX, positionY, domElement) {
     var positionX;
     var positionY;
-    var direction;
     var domElement;
 
     this.positionX = positionX;
     this.positionY = positionY;
-    this.direction = direction;
     this.domElement = domElement;
-
-    this.move = () => {
-        switch(this.direction) {
-            case "right" : 
-                moveToRight(this);
-                break;
-            case "down" :
-                moveToDown(this);
-                break;
-            case "up" :
-                moveToUp(this);
-                break;
-            case "left" :
-                moveToLeft(this);
-                break;
-        }
-
-        this.domElement.style.top = this.positionY;
-        this.domElement.style.left = this.positionX;
-    }
 
     return this;
 }
 
-const snake = [new SnakePart(0, 0, "right", snakeHead)];
-
-function addSnakePart() {
-    const lastSnakePart = snake[snake.length-1];
-
-    const domElement = document.createElement("div");
-    domElement.setAttribute("class", "snake");
-    domElement.style.left = lastSnakePart.positionX;
-    domElement.style.top = lastSnakePart.positionY;
-    playground.appendChild(domElement);
-
-    let snakePart = new SnakePart(lastSnakePart.positionX, lastSnakePart.positionY, lastSnakePart.direction, domElement);
-
-    setTimeout(() => {
-        snake.push(snakePart);
-    }, interval);
-}
+const snake = [new SnakePart(0, 0, snakeHead)];
 
 let resentPressedButton = "rightButton";
 
-function moveToRight(currentSnakePart) {
-    if(currentSnakePart.positionX == playgroundWidth - snakeWidth) {
-        currentSnakePart.positionX = 0;
+
+function moveToRight() {
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX + step;
+    lastSnakePart.positionY = firstSnakePart.positionY;
+
+    if(lastSnakePart.positionX > playgroundWidth - snakePartWidth) {
+        lastSnakePart.positionX = 0;
     }
 
-    currentSnakePart.positionX = currentSnakePart.positionX + step;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
 }
 
-function moveToLeft(currentSnakePart) {
-    if(currentSnakePart.positionX == 0) {
-        currentSnakePart.positionX = playgroundWidth - snakeWidth;
+function moveToLeft() {
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX - step;
+    lastSnakePart.positionY = firstSnakePart.positionY;
+
+    if(lastSnakePart.positionX < 0) {
+        lastSnakePart.positionX = playgroundWidth - snakePartWidth;
     }
 
-    currentSnakePart.positionX = currentSnakePart.positionX - step;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
 }
 
-function moveToDown(currentSnakePart) {
-    if(currentSnakePart.positionY == playgroundHeight - snakeHeight) {
-        currentSnakePart.positionY = 0;
+function moveToDown() {
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX;
+    lastSnakePart.positionY = firstSnakePart.positionY + step;
+
+    if(lastSnakePart.positionY > playgroundHeight - snakePartHeight) {
+        lastSnakePart.positionY = 0;
     }
 
-    currentSnakePart.positionY = currentSnakePart.positionY + step;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
 }
 
-function moveToUp(currentSnakePart) {
-    if(currentSnakePart.positionY == 0) {
-        currentSnakePart.positionY = playgroundHeight - snakeHeight;
+function moveToUp() {
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX;
+    lastSnakePart.positionY = firstSnakePart.positionY - step;
+
+    if(lastSnakePart.positionY < 0) {
+        lastSnakePart.positionY = playgroundHeight - snakePartHeight;
     }
 
-    currentSnakePart.positionY = currentSnakePart.positionY - step;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
+}
+
+
+function addSnakePart() {
+    const lastSnakePart = snake[snake.length - 1];
+
+    let positionX = lastSnakePart.positionX;
+    let positionY = lastSnakePart.positionY;
+
+    const domElement = document.createElement("div");
+    domElement.setAttribute("class", "snake-part");
+    domElement.style.left = positionX;
+    domElement.style.top = positionY;
+
+    snake.push(new SnakePart(positionX, positionY, domElement));
+
+    snakeArea.appendChild(domElement);
 }
 
 function checkIfCatch() {
@@ -111,36 +128,19 @@ function checkIfCatch() {
 }
 
 setInterval(() => {
-    for(let i = 0; i < snake.length; i++) {
-        const currentSnakePart = snake[i];
-        let inter = interval * i + 1;
-
-        if(i == 0) inter = 0;
-
-        switch(resentPressedButton) {
-            case "rightButton" :
-                setTimeout(() => {
-                    currentSnakePart.direction = "right";
-                }, inter);
-                break;
-            case "leftButton" :
-                setTimeout(() => {
-                    currentSnakePart.direction = "left";
-                }, inter);
-                break;
-            case "downButton" : 
-                setTimeout(() => {
-                    currentSnakePart.direction = "down";
-                }, inter);
-                break;
-            case "upButton" :
-                setTimeout(() => {
-                    currentSnakePart.direction = "up";
-                }, inter);
-                break;
-        }
-
-        currentSnakePart.move();
+    switch(resentPressedButton) {
+        case "rightButton" :
+            moveToRight();
+            break;
+        case "leftButton" :
+            moveToLeft();
+            break;
+        case "downButton" : 
+            moveToDown();
+            break;
+        case "upButton" :
+            moveToUp();
+            break;
     }
 
     checkIfCatch();

@@ -14,7 +14,13 @@ body {
     position: relative;
 }
 
-.snake {
+#snake {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.snake-part {
     width: 10px;
     height: 10px;
     background-color: red;
