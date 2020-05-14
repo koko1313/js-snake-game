@@ -1,18 +1,37 @@
 <html>
 <head>
-    <title>Ловци на цигани</title>
+    <title>Snake Game</title>
     <link href="./style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <h1 id="title">Ловци на цигани</h1>
+    <h1 id="title">Snake Game</h1>
 
-    <div id="playground">
-        <div id="snake"></div>
-        <div id="ciganin"></div>
-
-        <img id="ciganin-image" src="images/ciganin.jpg" />
+    <div id="point">
+        Points: <span id="pointsLabel">1</span>
     </div>
 
+    <div id="playground">
+        <div id="snake">
+            
+        </div>
+        <div id="apple"></div>
+    </div>
+
+    <div id="keys">
+        <div id="upRow">
+            <button id="upButton">⬆</button>
+        </div>
+        <div id="downRow">
+            <button id="leftButton">⬅</button>
+            <button id="downButton">⬇</button>
+            <button id="rightButton">➞</button>
+        </div>        
+    </div>
+
+    <script src="./constants.js"></script>
+    <script src="./snake.js"></script>
+    <script src="./apple.js"></script>
     <script src="./script.js"></script>
+    <script src="./buttons.js"></script>
 </body>
 </html>

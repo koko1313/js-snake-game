@@ -1,49 +1,95 @@
-let snake = document.getElementById("snake");
-
-let positionX = 0;
-let positionY = 0;
-let ciganinPositionX = 0;
-let ciganinPositionY = 0;
-
-let resentPressedButton = "rightButton";
+// when the game begin
+addNewApple();
+snake.push(new SnakePart(0, 0));
 
 function moveToRight() {
-    if(positionX == 580) {
-        positionX = 0;
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX + step;
+    lastSnakePart.positionY = firstSnakePart.positionY;
+
+    if(lastSnakePart.positionX > playgroundWidth - snakePartWidth) {
+        lastSnakePart.positionX = 0;
     }
 
-    positionX = positionX + 10;
-    snake.style.left = positionX;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
 }
 
 function moveToLeft() {
-    if(positionX == 0) {
-        positionX = 580;
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX - step;
+    lastSnakePart.positionY = firstSnakePart.positionY;
+
+    if(lastSnakePart.positionX < 0) {
+        lastSnakePart.positionX = playgroundWidth - snakePartWidth;
     }
 
-    positionX = positionX - 10;
-    snake.style.left = positionX;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
 }
 
 function moveToDown() {
-    if(positionY == 580) {
-        positionY = 0;
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX;
+    lastSnakePart.positionY = firstSnakePart.positionY + step;
+
+    if(lastSnakePart.positionY > playgroundHeight - snakePartHeight) {
+        lastSnakePart.positionY = 0;
     }
 
-    positionY = positionY + 10;
-    snake.style.top = positionY;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
 }
 
 function moveToUp() {
-    if(positionY == 0) {
-        positionY = 580;
+    const firstSnakePart = snake[0];
+    const lastSnakePart = snake.pop();
+
+    lastSnakePart.positionX = firstSnakePart.positionX;
+    lastSnakePart.positionY = firstSnakePart.positionY - step;
+
+    if(lastSnakePart.positionY < 0) {
+        lastSnakePart.positionY = playgroundHeight - snakePartHeight;
     }
 
-    positionY = positionY - 10;
-    snake.style.top = positionY;
+    lastSnakePart.domElement.style.left = lastSnakePart.positionX;
+    lastSnakePart.domElement.style.top = lastSnakePart.positionY;
+
+    snake.unshift(lastSnakePart);
+}
+
+
+function updatePoints() {
+    points = points + 1;
+    pointsLabel.innerText = points;
+}
+
+
+let resentPressedButton = "rightButton";
+
+function checkIfCatch() {
+    if(snake[0].positionX == applePositionX && snake[0].positionY == applePositionY) {
+        updatePoints();
+        addNewShakePart();
+        addNewApple();
+    }
 }
 
 setInterval(() => {
+    if (snake.length == 0) return;
+    
     if(resentPressedButton == "rightButton") {
         moveToRight();
     } 
@@ -57,10 +103,8 @@ setInterval(() => {
         moveToUp();
     }
 
-    if(positionX == ciganinPositionX && positionY == ciganinPositionY) {
-        addNewCiganin();
-    }
-}, 200);
+    checkIfCatch();
+}, interval);
 
 
 document.onkeydown = function(e) {
@@ -69,37 +113,17 @@ document.onkeydown = function(e) {
         case 37:
             resentPressedButton = "leftButton";
             break;
-
         // Arrow up
         case 38:
             resentPressedButton = "upButton";
             break;
-
         // Arrow right
         case 39:
             resentPressedButton = "rightButton";
             break;
-
         // Arrow down
         case 40:
             resentPressedButton = "downButton";
             break;
     }
 };
-
-
-// #############################################################
-function addNewCiganin() {
-    ciganinPositionX = Math.floor(Math.random() * 590);
-    ciganinPositionX = ciganinPositionX - ciganinPositionX % 10;
-
-    ciganinPositionY = Math.floor(Math.random() * 590);
-    ciganinPositionY = ciganinPositionY - ciganinPositionY % 10;
-
-    let ciganin = document.getElementById("ciganin");
-    ciganin.style.left = ciganinPositionX;
-    ciganin.style.top = ciganinPositionY;
-}
-
-
-addNewCiganin();
