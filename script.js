@@ -56,7 +56,7 @@ const SnakePart = function(x, y) {
         ctx.strokeStyle = "black";
         ctx.stroke();
 
-        if(isFirts) ctx.fillStyle = "white";
+        if(isFirts) ctx.fillStyle = "#b5ffb9";
         else ctx.fillStyle = "#12f202";
         ctx.fill();
     }
