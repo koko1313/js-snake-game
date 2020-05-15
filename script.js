@@ -48,7 +48,7 @@ const SnakePart = function(x, y) {
     this.x = x;
     this.y = y;
 
-    this.draw = function() {
+    this.draw = (isFirts = false) => {
         ctx.beginPath();
         ctx.rect(this.x, this.y, squareWidth, squareWidth);
 
@@ -56,7 +56,8 @@ const SnakePart = function(x, y) {
         ctx.strokeStyle = "black";
         ctx.stroke();
 
-        ctx.fillStyle = "#12f202";
+        if(isFirts) ctx.fillStyle = "white";
+        else ctx.fillStyle = "#12f202";
         ctx.fill();
     }
 }
@@ -98,9 +99,17 @@ const moveUp = (firstPart, lastPart) => {
 
 // ######################################
 
+const redrawSnake = () => {
+    // draw it in opposite side, so the head will be drawn last (will be over every other part (like z-index))
+    for(let i = snake.length - 1; i >= 0; i--) {
+        if(i === 0) snake[i].draw(true); // the first part
+        else snake[i].draw();
+    }
+}
+
 const redrawPlayground = () => {
     ctx.clearRect(0, 0, playground.width, playground.height);
-    snake.forEach(snakePart => snakePart.draw());
+    redrawSnake()
     apple.draw();
 }
 
