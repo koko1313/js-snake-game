@@ -1,3 +1,3 @@
 # Snake game
 
-A snake game without using HTML Canvas.
+A snake game using HTML Canvas and vanilla javascript.
